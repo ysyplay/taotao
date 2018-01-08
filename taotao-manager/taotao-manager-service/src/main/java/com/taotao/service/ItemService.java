@@ -1,5 +1,6 @@
 package com.taotao.service;
 
+import com.taotao.common.pojo.EUDataGridResult;
 import com.taotao.pojo.TbItem;
 
 /**
@@ -7,5 +8,6 @@ import com.taotao.pojo.TbItem;
  */
 public interface ItemService
 {
-    public TbItem selectById(Long itemID);
+    TbItem selectById(Long itemID);
+    EUDataGridResult getItemList(int page,int rows);
 }
