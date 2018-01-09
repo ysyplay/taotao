@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -22,8 +23,7 @@ public class ItemController
 {
     @Autowired
     private ItemService itemService;
-    @Autowired
-    private ItemCategoryService itemCategoryService;
+
 
     @RequestMapping("{itemID}")
     @ResponseBody
@@ -39,11 +39,6 @@ public class ItemController
     {
         return  itemService.getItemList(page, rows);
     }
-    @RequestMapping("cat/list")
-    @ResponseBody
-    public List<EUTreeNode> selectCatgorybyParentId(long parentId)
-    {
-        return  itemCategoryService.selectbyParentID(parentId);
-    }
+
 
 }
