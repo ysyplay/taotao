@@ -9,32 +9,44 @@
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
     <import resource="applicationContext-dao.xml"/>
-    <!-- 事务管理器 -->
-    <bean id="transactionManager"
-          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <!-- 数据源 -->
-        <property name="dataSource" ref="dataSource" />
+    <context:component-scan base-package="com.taotao.service" annotation-config="true"/>
+    <!-- 使用@Transactional进行声明式事务管理需要声明下面这行 -->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+    <!-- 事务管理 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="rollbackOnCommitFailure" value="true"/>
     </bean>
+
+
+
+
+    <!-- 事务管理器 -->
+    <!--<bean id="transactionManager"-->
+          <!--class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+        <!--&lt;!&ndash; 数据源 &ndash;&gt;-->
+        <!--<property name="dataSource" ref="dataSource" />-->
+    <!--</bean>-->
     <!-- 通知 -->
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <!-- 传播行为 -->
-            <!-- "REQUIRED" 如果当前有事务就在事务中执行，如果当前没事务创建一个新事务 -->
-            <tx:method name="save*" propagation="REQUIRED" />
-            <tx:method name="insert*" propagation="REQUIRED" />
-            <tx:method name="add*" propagation="REQUIRED" />
-            <tx:method name="create*" propagation="REQUIRED" />
-            <tx:method name="delete*" propagation="REQUIRED" />
-            <tx:method name="update*" propagation="REQUIRED" />
-            <!-- "REQUIRED" 如果当前有事务就在事务中执行，如果当前没事务不会创建一个新事务 -->
-            <tx:method name="find*" propagation="SUPPORTS" read-only="true" />
-            <tx:method name="select*" propagation="SUPPORTS" read-only="true" />
-            <tx:method name="get*" propagation="SUPPORTS" read-only="true" />
-        </tx:attributes>
-    </tx:advice>
-    <!-- 切面 -->
-    <aop:config>
-        <aop:advisor advice-ref="txAdvice"
-                     pointcut="execution(* com.taotao.service.*.*(..))" />
-    </aop:config>
+    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
+        <!--<tx:attributes>-->
+            <!--&lt;!&ndash; 传播行为 &ndash;&gt;-->
+            <!--&lt;!&ndash; "REQUIRED" 如果当前有事务就在事务中执行，如果当前没事务创建一个新事务 &ndash;&gt;-->
+            <!--<tx:method name="save*" propagation="REQUIRED" />-->
+            <!--<tx:method name="insert*" propagation="REQUIRED" />-->
+            <!--<tx:method name="add*" propagation="REQUIRED" />-->
+            <!--<tx:method name="create*" propagation="REQUIRED" />-->
+            <!--<tx:method name="delete*" propagation="REQUIRED" />-->
+            <!--<tx:method name="update*" propagation="REQUIRED" />-->
+            <!--&lt;!&ndash; "REQUIRED" 如果当前有事务就在事务中执行，如果当前没事务不会创建一个新事务 &ndash;&gt;-->
+            <!--<tx:method name="find*" propagation="SUPPORTS" read-only="true" />-->
+            <!--<tx:method name="select*" propagation="SUPPORTS" read-only="true" />-->
+            <!--<tx:method name="get*" propagation="SUPPORTS" read-only="true" />-->
+        <!--</tx:attributes>-->
+    <!--</tx:advice>-->
+    <!--&lt;!&ndash; 切面 &ndash;&gt;-->
+    <!--<aop:config>-->
+        <!--<aop:advisor advice-ref="txAdvice"-->
+                     <!--pointcut="execution(* com.taotao.service.*.*(..))" />-->
+    <!--</aop:config>-->
 </beans>
