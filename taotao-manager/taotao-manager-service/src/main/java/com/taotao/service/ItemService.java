@@ -13,8 +13,9 @@ public interface ItemService
 {
     TbItem selectById(Long itemID);
     EUDataGridResult getItemList(int page,int rows);
-    ServerResponse addItem(TbItem item,String description) throws Exception;
+    ServerResponse addItem(TbItem item,String description,String itemParam) throws Exception;
     EUDataGridResult getItemParamList(int page,int rows);
     ServerResponse getItemParamByCid(long cid);
     TaotaoResult insertItemParam(TbItemParam itemParam);
+    ServerResponse deleteItemParam(String ids);
 }

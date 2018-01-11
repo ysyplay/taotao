@@ -2,12 +2,14 @@ package com.taotao.service.Impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import com.taotao.common.pojo.EUDataGridResult;
 import com.taotao.common.pojo.ServerResponse;
 import com.taotao.common.pojo.TaotaoResult;
 import com.taotao.common.utils.IDUtils;
 import com.taotao.mapper.TbItemDescMapper;
 import com.taotao.mapper.TbItemMapper;
+import com.taotao.mapper.TbItemParamItemMapper;
 import com.taotao.mapper.TbItemParamMapper;
 import com.taotao.pojo.*;
 import com.taotao.service.ItemService;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +34,8 @@ public class ItemServiceImpl implements ItemService
     private TbItemDescMapper itemDescMapper;
     @Autowired
     private TbItemParamMapper itemParamMapper;
+    @Autowired
+    private TbItemParamItemMapper itemParamItemMapper;
 
 
     public TbItem selectById(Long itemID)
@@ -90,9 +95,23 @@ public class ItemServiceImpl implements ItemService
         return TaotaoResult.ok();
     }
 
+    //删除规格
+    @Transactional
+    public ServerResponse deleteItemParam(String ids) {
+
+        TbItemParamExample itemParamExample = new TbItemParamExample();
+        TbItemParamExample.Criteria criteria = itemParamExample.createCriteria();
+        List idList = Arrays.asList(ids.split(","));
+        criteria.andIdIn(idList);
+        //插入到规格参数模板表
+        itemParamMapper.deleteByExample(itemParamExample);
+        return ServerResponse.createBySuccess();
+
+    }
+
     //添加商品
     @Transactional
-    public ServerResponse addItem(TbItem item,String description) throws Exception {
+    public ServerResponse addItem(TbItem item,String description,String itemParam) throws Exception {
         Long itemId = IDUtils.genItemId();
         item.setId(itemId);
         item.setStatus((byte)1);
@@ -100,12 +119,13 @@ public class ItemServiceImpl implements ItemService
         item.setUpdated(new Date());
         itemMapper.insert(item);
         addDescription(itemId,description);
+        insertItemParamItem(itemId,itemParam);
         return  ServerResponse.createBySuccess();
     }
 
 
 
-
+    // 添加描述信息
     public void addDescription(Long itemId,String description)
     {
         TbItemDesc itemDesc = new TbItemDesc();
@@ -116,5 +136,17 @@ public class ItemServiceImpl implements ItemService
         itemDescMapper.insert(itemDesc);
     }
 
+    // 添加规格参数
+
+    private void insertItemParamItem(Long itemId, String itemParam) {
+        //创建一个pojo
+        TbItemParamItem itemParamItem = new TbItemParamItem();
+        itemParamItem.setItemId(itemId);
+        itemParamItem.setParamData(itemParam);
+        itemParamItem.setCreated(new Date());
+        itemParamItem.setUpdated(new Date());
+        //向表中插入数据
+        itemParamItemMapper.insert(itemParamItem);
+    }
 
 }

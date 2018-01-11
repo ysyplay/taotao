@@ -45,38 +45,15 @@ public class ItemController
     }
 
 
-    @RequestMapping("param/list")
-    @ResponseBody
-    public EUDataGridResult selectParamLlist(int page, int rows)
-    {
-        return  itemService.getItemParamList(page, rows);
-    }
 
-    @RequestMapping("param/query/itemcatid/{itemCatId}")
-    @ResponseBody
-    public ServerResponse getItemParamByCid(@PathVariable Long itemCatId) {
-        ServerResponse result = itemService.getItemParamByCid(itemCatId);
-        return result;
-    }
-
-    @RequestMapping("param/save/{cid}")
-    @ResponseBody
-    public TaotaoResult insertItemParam(@PathVariable Long cid, String paramData) {
-        //创建pojo对象
-        TbItemParam itemParam = new TbItemParam();
-        itemParam.setItemCatId(cid);
-        itemParam.setParamData(paramData);
-        TaotaoResult result = itemService.insertItemParam(itemParam);
-        return result;
-    }
 
 
     @RequestMapping("save")
     @ResponseBody
-    public ServerResponse addItem(TbItem item,String desc) throws Exception
+    public ServerResponse addItem(TbItem item,String desc,String itemParams) throws Exception
 
     {
-        return  itemService.addItem(item,desc);
+        return  itemService.addItem(item,desc,itemParams);
     }
 
 
