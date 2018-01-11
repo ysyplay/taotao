@@ -2,6 +2,7 @@ package com.taotao.controller;
 
 import com.taotao.common.pojo.EUDataGridResult;
 import com.taotao.common.pojo.EUTreeNode;
+import com.taotao.common.pojo.ServerResponse;
 import com.taotao.pojo.TbItem;
 import com.taotao.service.ItemCategoryService;
 import com.taotao.service.ItemService;
@@ -40,5 +41,12 @@ public class ItemController
         return  itemService.getItemList(page, rows);
     }
 
+    @RequestMapping("save")
+    @ResponseBody
+    public ServerResponse addItem(TbItem item)
+
+    {
+        return  itemService.addItem(item);
+    }
 
 }

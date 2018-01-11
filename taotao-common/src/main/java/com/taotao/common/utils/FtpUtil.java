@@ -1,9 +1,6 @@
 package com.taotao.common.utils;
 
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPReply;
+import org.apache.commons.net.ftp.*;
 
 import java.io.*;
 
@@ -33,6 +30,7 @@ public class FtpUtil {
 	public static boolean uploadFile(String host, int port, String username, String password, String basePath,
 			String filePath, String filename, InputStream input) {
 		boolean result = false;
+//		FTPSClient ftp = new FTPSClient("SSL",true);
 		FTPClient ftp = new FTPClient();
 		try {
 			int reply;
@@ -46,20 +44,20 @@ public class FtpUtil {
 			}
 			//切换到上传目录
 			if (!ftp.changeWorkingDirectory(basePath+filePath)) {
-				//如果目录不存在创建目录
-				String[] dirs = filePath.split("/");
-				String tempPath = basePath;
-				for (String dir : dirs) {
-					if (null == dir || "".equals(dir)) continue;
-					tempPath += "/" + dir;
-					if (!ftp.changeWorkingDirectory(tempPath)) {
-						if (!ftp.makeDirectory(tempPath)) {
-							return result;
-						} else {
-							ftp.changeWorkingDirectory(tempPath);
-						}
-					}
-				}
+                    //如果目录不存在创建目录
+                    String[] dirs = filePath.split("/");
+                    String tempPath = basePath;
+                    for (String dir : dirs) {
+                        if (null == dir || "".equals(dir)) continue;
+                        tempPath += "/" + dir;
+                        if (!ftp.changeWorkingDirectory(tempPath)) {
+                            if (!ftp.makeDirectory(tempPath)) {
+                                return result;
+                            } else {
+                                ftp.changeWorkingDirectory(tempPath);
+                            }
+                        }
+                    }
 			}
 			//设置上传文件的类型为二进制类型
 			ftp.setFileType(FTP.BINARY_FILE_TYPE);
@@ -67,12 +65,14 @@ public class FtpUtil {
 			if (!ftp.storeFile(filename, input)) {
 				return result;
 			}
+			result = true;
 			input.close();
 			ftp.logout();
-			result = true;
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
+
 			if (ftp.isConnected()) {
 				try {
 					ftp.disconnect();

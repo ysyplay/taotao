@@ -3,6 +3,7 @@ package controller;
 import com.taotao.common.utils.FtpUtil;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -32,11 +33,13 @@ public class FTPTest {
 		ftpClient.logout();
 		
 	}
-	
+
 	@Test
 	public void testFtpUtil() throws Exception {
 		FileInputStream inputStream = new FileInputStream(new File("/Users/runa/Desktop/123.png"));
 		FtpUtil.uploadFile("127.0.0.1", 2121, "Runa", "ysyplay", "/taotao/images", "/2018/01/10", "test.jpg", inputStream);
-		
+
 	}
+
+
 }

@@ -20,6 +20,7 @@ public class PageController
     @RequestMapping("/{page}")
     public String showpage(@PathVariable String page)
     {
+
         return page;
     }
 }
