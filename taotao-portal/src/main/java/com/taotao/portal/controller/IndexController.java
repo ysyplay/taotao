@@ -13,6 +13,8 @@ public class IndexController
 	@RequestMapping("/index")
 	public String showIndex(Model model)
 	{
+		System.out.println("**************** index");
 		return "index";
 	}
+
 }
