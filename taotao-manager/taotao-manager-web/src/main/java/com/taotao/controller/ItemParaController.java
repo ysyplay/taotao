@@ -32,7 +32,8 @@ public class ItemParaController
 
     @RequestMapping("item/param/query/itemcatid/{itemCatId}")
     @ResponseBody
-    public ServerResponse getItemParamByCid(@PathVariable Long itemCatId) {
+    public ServerResponse getItemParamByCid(@PathVariable Long itemCatId)
+    {
         ServerResponse result = itemService.getItemParamByCid(itemCatId);
         return result;
     }
