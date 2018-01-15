@@ -9,7 +9,7 @@
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
     <import resource="applicationContext-dao.xml"/>
-    <context:component-scan base-package="com.taotao" annotation-config="true"/>
+    <context:component-scan base-package="com.taotao.rest" annotation-config="true"/>
     <!-- 使用@Transactional进行声明式事务管理需要声明下面这行 -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
     <!-- 事务管理 -->
