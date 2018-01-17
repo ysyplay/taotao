@@ -16,4 +16,5 @@ public interface ContentCategoryService
     List<EUTreeNode> getCategoryList(long parentId);
     ServerResponse insertContentCategory(long parentId, String name);
     EUDataGridResult getCategoryContentList(long catId, Integer page, Integer rows);
+    TaotaoResult insertContent(TbContent content);
 }

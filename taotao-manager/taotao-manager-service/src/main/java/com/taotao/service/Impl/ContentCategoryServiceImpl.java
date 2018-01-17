@@ -85,6 +85,14 @@ public class ContentCategoryServiceImpl implements ContentCategoryService
         result.setRows(list);
          return result;
     }
+
+    @Override
+    public TaotaoResult insertContent(TbContent content) {
+        content.setCreated(new Date());
+        content.setUpdated(new Date());
+        contentMapper.insert(content);
+        return TaotaoResult.ok();
+    }
 }
 
 
