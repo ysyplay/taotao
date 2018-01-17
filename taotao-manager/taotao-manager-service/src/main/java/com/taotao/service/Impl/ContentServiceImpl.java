@@ -39,6 +39,12 @@ public class ContentServiceImpl implements ContentService {
 		content.setUpdated(new Date());
 		contentMapper.insert(content);
 
+		//添加缓存同步逻辑
+		try {
+			HttpClientUtil.doGet(REST_BASE_URL + REST_CONTENT_SYNC_URL + content.getCategoryId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return TaotaoResult.ok();
 	}
 
