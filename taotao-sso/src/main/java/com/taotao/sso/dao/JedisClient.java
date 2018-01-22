@@ -1,4 +1,4 @@
-package com.taotao.rest.dao;
+package com.taotao.sso.dao;
 
 public interface JedisClient {
 
@@ -6,11 +6,8 @@ public interface JedisClient {
 	String set(String key, String value);
 	String hget(String hkey, String key);
 	long hset(String hkey, String key, String value);
-	//	自增
 	long incr(String key);
-	//	设置有效时间。hash无法设置有效时间？
 	long expire(String key, int second);
-	//查看过期时间
 	long ttl(String key);
 	long del(String key);
 	long hdel(String hkey, String key);
