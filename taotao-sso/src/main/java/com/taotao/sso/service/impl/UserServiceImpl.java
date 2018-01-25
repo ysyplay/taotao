@@ -80,15 +80,6 @@ public class UserServiceImpl implements UserService {
 		return TaotaoResult.ok();
 	}
 
-	/**
-	 * 用户登录
-	 * <p>Title: userLogin</p>
-	 * <p>Description: </p>
-	 * @param username
-	 * @param password
-	 * @return
-	 * @see UserService#userLogin(String, String)
-	 */
 	@Override
 	public TaotaoResult userLogin(String username, String password,
 			HttpServletRequest request, HttpServletResponse response) {
